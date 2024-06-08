@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\UploadImg\NewFolder\**" />
+    <Content Remove="wwwroot\UploadImg\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\UploadImg\NewFolder\**" />
+    <None Remove="wwwroot\UploadImg\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\UploadImg\Category\" />
+    <Folder Include="wwwroot\UploadImg\BrandImage\" />
+    <Folder Include="wwwroot\UploadImg\Product\" />
+    <Folder Include="wwwroot\UploadImg\ProfileImg\" />
+    <Folder Include="wwwroot\UploadImg\SubCategory\" />
+  </ItemGroup>
+
+</Project>
