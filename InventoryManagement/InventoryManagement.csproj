@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\css\NewFolder\" />
     <Folder Include="wwwroot\UploadImg\Category\" />
     <Folder Include="wwwroot\UploadImg\BrandImage\" />
     <Folder Include="wwwroot\UploadImg\Product\" />

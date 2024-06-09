@@ -17,6 +17,16 @@ namespace InventoryManagement.Controllers
 		{
 			return View();
 		}
+		[HttpPost]
+		public IActionResult AddPurchage(string data)
+		{
+			return View();
+		}
+
+
+
+
+
 		public IActionResult PurchageImport()
 		{
 			return View();
@@ -30,8 +40,8 @@ namespace InventoryManagement.Controllers
 			{
 				foreach (DataRow dr in dt.Rows)
 				{
-					pro.CustomerName = dr["CustomerName"].ToString();
-					pro.CustomerMobile = dr["CustomerMobile"].ToString();
+					pro.SupplierName = dr["CustomerName"].ToString();
+					pro.Mobile = dr["CustomerMobile"].ToString();
 				}
 			}
 
