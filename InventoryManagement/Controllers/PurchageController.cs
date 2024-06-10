@@ -1,5 +1,8 @@
 ﻿using InventoryManagement.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Evaluation.Context;
+using Newtonsoft.Json.Linq;
 using NuGet.Protocol;
 using System.Data;
 using System.Diagnostics;
@@ -21,12 +24,12 @@ namespace InventoryManagement.Controllers
 		[HttpPost]
 		public IActionResult AddPurchage(string data)
 		{
-			var p = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+			var p=JObject.Parse(data);
+			var a = JsonOptions().SerializerSettings.SerializeObject(p);
+			var transaction = Newtonsoft.Json.JsonConvert.DeserializeObject<PurchageProduct>(data);
 
-			foreach (var item in p.ToString())
-			{
-				
-			}
+			
+
 			return View();
 		}
 
@@ -48,7 +51,7 @@ namespace InventoryManagement.Controllers
 				foreach (DataRow dr in dt.Rows)
 				{
 					pro.SupplierName = dr["CustomerName"].ToString();
-					pro.Mobile = dr["CustomerMobile"].ToString();
+					pro.Mobile = Convert.ToInt32(dr["CustomerMobile"].ToString());
 				}
 			}
 
