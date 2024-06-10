@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using System.Data;
 using System.Diagnostics;
 
@@ -20,6 +21,12 @@ namespace InventoryManagement.Controllers
 		[HttpPost]
 		public IActionResult AddPurchage(string data)
 		{
+			var p = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+
+			foreach (var item in p.ToString())
+			{
+				
+			}
 			return View();
 		}
 

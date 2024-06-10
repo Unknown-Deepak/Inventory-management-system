@@ -2,18 +2,20 @@
 {
 	public class PurchageProduct
 	{
-		public string SupplierName { get; set; }	
-		public string Mobile { get; set; }		
-		public string ItemName { get; set; }	
-		public string ProductId { get; set; }
-		public double UnitPrice { get; set; }
-		public int BillNo { get; set;}
-		public int TotalUnit { get; set;}
-		public int Quentity { get; set; }
-		public double TotalPrice { get; set;}
-		public string BillDetails { get; set;}
-		public DateTime PurchageDate { get; set;}
+		public int SupplierId { get; set; }
+		public string SupplierName { get; set; }
+		public int BillNo { get; set; }
+		public string BillDetails { get; set; }
+		public DateTime PurchageDate { get; set; }
+		public int Mobile { get; set; }
+		public List<purchaseItem> purchaseItems { get; set; }
 
 	}
-
+	public class purchaseItem { 
+		public int ItemId { get; set; }
+		public string ItemName { get; set; }	
+		public string QTY { get; set; }	
+		public double purchaseprince { get; set; }
+		public int TotalCast { get; set;}
+	}
 }
