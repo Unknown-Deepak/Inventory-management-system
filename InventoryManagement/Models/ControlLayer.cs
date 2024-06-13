@@ -659,6 +659,65 @@ namespace InventoryManagement.Models
 				return d;
 			}
 		}
+
+
+
+//----------------------------------Purchase Data And Purchase Item-------------------------------------------
+		public bool InsertPurchaseData(PurchageProduct? obj)
+		{
+			DataTable dt = new DataTable();
+			var check = 1;
+			try
+			{
+				using(SqlConnection con = new SqlConnection(DatabaseString))
+				{
+					SqlCommand cmd = new SqlCommand("purchaseInsertSupplierDetails",con);
+					cmd.CommandType= CommandType.StoredProcedure;
+					cmd.Parameters.AddWithValue("@SupplierName", obj.SupplierName);
+					cmd.Parameters.AddWithValue("@BillNo", Convert.ToInt32(obj.BillNo));
+					cmd.Parameters.AddWithValue("@BillDetails", obj.BillDetails);
+					cmd.Parameters.AddWithValue("@PurchageDate", Convert.ToDateTime(obj.PurchageDate));
+					cmd.Parameters.AddWithValue("@MobileNo",(int)Convert.ToInt64(obj.Mobile));
+					cmd.Parameters.AddWithValue("@CreateBy", obj.CreateBy);
+					SqlDataAdapter dl = new SqlDataAdapter(cmd);
+					dl.Fill(dt);
+					if (dt.Rows.Count > 0)
+					{
+						var id = dt.Rows[0]["Column1"];
+						if (obj.purchageitem.Count > 0)
+						{
+							foreach (var mod in obj.purchageitem)
+							{
+								SqlConnection conItem = new SqlConnection(DatabaseString); 
+								conItem.Open();
+								SqlCommand cmdd = new SqlCommand("purchaseInsert_Item", conItem);
+								cmdd.CommandType = CommandType.StoredProcedure;
+								cmdd.Parameters.AddWithValue("@purchageId", id);
+								cmdd.Parameters.AddWithValue("@ItemName", mod.itemName);
+								cmdd.Parameters.AddWithValue("@Qty", mod.Qty);
+								cmdd.Parameters.AddWithValue("@purchaseprince", mod.purchaseprince);
+								cmdd.Parameters.AddWithValue("@TotalCost", mod.TotalCost);
+								int a=cmdd.ExecuteNonQuery();
+								if(a > 0)
+								{
+									continue;
+								}
+								else
+								{
+									return false;
+								}
+							}
+							check = 0;
+						}
+					}										 
+				}										
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }
 

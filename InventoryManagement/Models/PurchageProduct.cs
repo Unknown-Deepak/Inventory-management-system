@@ -10,14 +10,15 @@ namespace InventoryManagement.Models
 		public string BillDetails { get; set; }
 		public string PurchageDate { get; set; }
 		public string Mobile { get; set; }
-		public List<purchaseItem> purchaseItems { get; set; }
+		public string CreateBy { get; set; }
+		public List<purchaseItem> purchageitem = new List<purchaseItem>{};
 
 	}
 	public class purchaseItem { 
 		public int ItemId { get; set; }
-		public string ItemName { get; set; }	
-		public string QTY { get; set; }	
+		public string itemName { get; set; }	
+		public string Qty { get; set; }	
 		public string purchaseprince { get; set; }
-		public string TotalCast { get; set;}
+		public string TotalCost { get; set;}
 	}
 }

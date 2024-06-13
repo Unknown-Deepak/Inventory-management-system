@@ -58,7 +58,7 @@
 					<div class="col-lg-3 col-sm-6 col-12">
 						<div class="form-group">
 							<label>Mobile No.</label>
-							<input type="text" class="form-control" id="Mobile">
+							<input type="number" class="form-control" id="Mobile">
 						</div>
 					</div>
 					<div class="row">
@@ -151,6 +151,7 @@
 
 		$.post("/Purchage/AddPurchage", { data: Data }, function (result) {
 			alert("Breaking news posted data");
+			window.location.href = window.location.href;
 		})
 
 	};

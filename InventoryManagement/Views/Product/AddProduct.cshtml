@@ -1,4 +1,4 @@
-﻿@model InventoryManagement.Models.ProductClass
+﻿ @model InventoryManagement.Models.ProductClass
 @{
     ViewData["Title"] = "AddProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,7 +18,7 @@
         <div class="card">
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data" asp-action="AddProduct" asp-controller="Product">
-                    @Html.HiddenFor(a=>a.ProductId);
+                    @Html.HiddenFor(a=>a.ProductId)
                     <div class="row">
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="form-group">
