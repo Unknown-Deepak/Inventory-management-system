@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script src="/assets/js/jquery-3.6.0.min.js"></script>
 
 <div class="page-wrapper">
 	<div class="content">
@@ -124,7 +125,7 @@
 <script>
 	function SaveData(obj) {
 		var mainobj = new Object();
-		mainobj.SupplierName = $("#SupplierName").val();
+		mainobj.CustomerName = $("#CustomerName").val();
 		mainobj.BillNo = $("#BillNo").val();
 		mainobj.BillDetails = $("#BillDetails").val();
 		mainobj.SalesDate = $("#SalesDate").val();
@@ -147,7 +148,6 @@
 			});
 		});
 		mainobj.Salesitem = itemlist;
-
 		var Data = JSON.stringify(mainobj);
 
 		$.post("/Sales/AddSales", { data: Data }, function (result) {
@@ -190,9 +190,8 @@
 	});
 
 	$(document).ready(function () {
-		let a = Math.random(10) * 10;
-		alert(a);
-		$("#BillNo").val(a);
+		let a = Math.random() * 1000 +1;
+		$("#BillNo").val(a.toFixed())
 	});
 
 </script>

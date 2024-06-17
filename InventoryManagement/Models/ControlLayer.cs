@@ -718,6 +718,63 @@ namespace InventoryManagement.Models
 			}
 			return true;
 		}
+
+//----------------------------------Sales Data And Sales Item-------------------------------------------
+		public bool SalesDataInsert(SalesClass mod)
+		{
+			DataTable dt = new DataTable();
+			var check = 1;
+			try
+			{
+				using (SqlConnection con = new SqlConnection(DatabaseString))
+				{
+					SqlCommand cmd = new SqlCommand("SalesCustomerData", con);
+					cmd.CommandType = CommandType.StoredProcedure;
+					cmd.Parameters.AddWithValue("@CustomerName", mod.CustomerName);
+					cmd.Parameters.AddWithValue("@BillNo", Convert.ToInt32(mod.BillNo));
+					cmd.Parameters.AddWithValue("@BillDetails", mod.BillDetails);
+					cmd.Parameters.AddWithValue("@SalesDate", Convert.ToDateTime(mod.SalesDate));
+					cmd.Parameters.AddWithValue("@MobileNo", (int)Convert.ToInt64(mod.Mobile));
+					cmd.Parameters.AddWithValue("@CreateBy", mod.CreateBy == null?0: mod.CreateBy) ;
+					SqlDataAdapter dl = new SqlDataAdapter(cmd);
+					dl.Fill(dt);
+					if (dt.Rows.Count > 0)
+					{
+						var id = dt.Rows[0]["Column1"];
+						if (mod.Salesitem.Count > 0)
+						{
+							foreach (var item in mod.Salesitem)
+							{
+								SqlConnection conItem = new SqlConnection(DatabaseString);
+								conItem.Open();
+								SqlCommand cmdd = new SqlCommand("SalesItemDataInsert", conItem);
+								cmdd.CommandType = CommandType.StoredProcedure;
+								cmdd.Parameters.AddWithValue("@SalesId", id);
+	  							cmdd.Parameters.AddWithValue("@ItemName", item.itemName);
+	  							cmdd.Parameters.AddWithValue("@Qty", Convert.ToInt32(item.Qty));
+	  							cmdd.Parameters.AddWithValue("@Salesprice",Convert.ToInt32(item.Salesprice));
+								cmdd.Parameters.AddWithValue("@TotalCost", Convert.ToInt32(item.TotalCost));
+	 							int a = cmdd.ExecuteNonQuery();
+								if (a > 0)
+								{
+									continue;
+								}
+								else
+								{
+									return false;
+								}
+							}
+							check = 0;
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }
 
