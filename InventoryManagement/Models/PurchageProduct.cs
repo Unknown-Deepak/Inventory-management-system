@@ -10,6 +10,9 @@ namespace InventoryManagement.Models
 		public string BillDetails { get; set; }
 		public string PurchageDate { get; set; }
 		public string Mobile { get; set; }
+		public string Totalamount { get; set; }
+		public string Grandtotal { get; set; }
+		public string Discount { get; set; }
 		public string CreateBy { get; set; }
 		public List<purchaseItem> purchageitem = new List<purchaseItem>{};
 

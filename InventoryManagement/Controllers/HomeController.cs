@@ -45,7 +45,6 @@ namespace InventoryManagement.Controllers
 				addCat.CategoryDesc = dr["CategoryDesc"].ToString();
                 addCat.CategoryImg = dr["CategoryImg"].ToString();
                 lst.Add(addCat);
-
             }
             obj.lstCat = lst;
             return View(obj);
@@ -106,7 +105,7 @@ namespace InventoryManagement.Controllers
                 ViewBag.sms = "Category Data UpDated Successfully";
             }
 
-			return RedirectToAction("ViewPage","Home");
+			return RedirectToAction("ViewProduct", "Home");
 		}
 
         [HttpPost]

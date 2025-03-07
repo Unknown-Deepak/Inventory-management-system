@@ -25,16 +25,25 @@ namespace InventoryManagement.Controllers
 		[HttpPost]
 		public IActionResult AddPurchage(string data)
 		{
+			string sms= "";
 			var transaction = JsonConvert.DeserializeObject<PurchageProduct>(data);
-			if (data != null)
+			if (data != null && transaction!=null)
 			{
 				transaction.CreateBy = HttpContext.Session.GetString("UserId");
+				var ddd = Convert.ToDateTime(transaction.PurchageDate);
+				transaction.PurchageDate = ddd.ToString("yyyy-MM-dd");
 
 				bool dt = lyer.InsertPurchaseData(transaction);
+				if(dt)
+				{
+					sms = "Purchage Data Insert Successfully";
+				}
+				else
+				{
+					sms = "Some thing went Wrong";
+				}
 			}
-			
-
-			return View();
+			return Json(sms);
 		}
 
 

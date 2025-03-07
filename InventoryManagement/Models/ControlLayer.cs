@@ -10,12 +10,14 @@ namespace InventoryManagement.Models
 	public class ControlLayer
 	{
 		string DatabaseString = "";
+		private string Text;
+
 		public ControlLayer()
 		{
-			DatabaseString = "Data Source=DESKTOP-4PUO57K;Initial Catalog=InventoryManagement;Integrated Security=True;";
+			DatabaseString = "Data Source=DESKTOP-0A037P0;Initial Catalog=InventoryManagement;Integrated Security=True;";
 		}
 		//----------------------------------------Commane Mathod----------------------------------------------------
-		#region Common method
+	
 		private DataTable ExcuteProcedurToGetDataTable(string storeprodur, SqlParameter[] pm)
 		{
 			DataTable dt = new DataTable();
@@ -41,6 +43,37 @@ namespace InventoryManagement.Models
 			return dt;
 
 		}
+
+		private bool ExcuteProcedurToInsertData(string store, SqlParameter[] item)
+		{
+			try
+			{
+				using(SqlConnection  con = new SqlConnection(DatabaseString))
+				{
+					con.Open();
+					SqlCommand sqlcmd = new SqlCommand(store, con);
+					sqlcmd.CommandType= CommandType.StoredProcedure;
+					if (item != null)
+					{
+						sqlcmd.Parameters.AddRange(item);
+					}
+					int n=sqlcmd.ExecuteNonQuery();
+					if (n > 0)
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
+		}
+
 
 
 
@@ -687,9 +720,11 @@ namespace InventoryManagement.Models
 		public bool InsertPurchaseData(PurchageProduct? obj)
 		{
 			DataTable dt = new DataTable();
-			var check = 1;
 			try
 			{
+
+				DateTime date = new DateTime();
+
 				using (SqlConnection con = new SqlConnection(DatabaseString))
 				{
 					SqlCommand cmd = new SqlCommand("purchaseInsertSupplierDetails", con);
@@ -697,9 +732,12 @@ namespace InventoryManagement.Models
 					cmd.Parameters.AddWithValue("@SupplierName", obj.SupplierName);
 					cmd.Parameters.AddWithValue("@BillNo", Convert.ToInt32(obj.BillNo));
 					cmd.Parameters.AddWithValue("@BillDetails", obj.BillDetails);
-					cmd.Parameters.AddWithValue("@PurchageDate", Convert.ToDateTime(obj.PurchageDate));
+					cmd.Parameters.AddWithValue("@PurchageDate",DateTime.Parse(obj.PurchageDate));
 					cmd.Parameters.AddWithValue("@MobileNo", (int)Convert.ToInt64(obj.Mobile));
-					cmd.Parameters.AddWithValue("@CreateBy", obj.CreateBy);
+					cmd.Parameters.AddWithValue("@TotalAmount", (int)Convert.ToInt64(obj.Totalamount));
+					cmd.Parameters.AddWithValue("@Discount", Convert.ToInt32(obj.Discount));
+					cmd.Parameters.AddWithValue("@GrandAmount", Convert.ToDouble(obj.Grandtotal));
+					cmd.Parameters.AddWithValue("@CreateBy", obj.CreateBy==null?0 : obj.CreateBy);
 					SqlDataAdapter dl = new SqlDataAdapter(cmd);
 					dl.Fill(dt);
 					if (dt.Rows.Count > 0)
@@ -728,7 +766,6 @@ namespace InventoryManagement.Models
 									return false;
 								}
 							}
-							check = 0;
 						}
 					}
 				}
@@ -739,6 +776,9 @@ namespace InventoryManagement.Models
 			}
 			return true;
 		}
+
+
+
 
 		//----------------------------------Sales Data And Sales Item-------------------------------------------
 		public bool SalesDataInsert(SalesClass mod)

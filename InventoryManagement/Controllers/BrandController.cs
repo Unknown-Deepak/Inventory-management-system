@@ -81,7 +81,7 @@ namespace InventoryManagement.Controllers
 				ViewBag.sms = "Something want to wrong";
 			}
 
-			return View();
+			return RedirectToAction("ViewBrand", "Brand");
 		}
 
 		[HttpPost]

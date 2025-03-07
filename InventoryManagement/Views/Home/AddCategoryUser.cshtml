@@ -15,7 +15,7 @@
 		<!-- /add -->
 		<div class="card">
 			<div class="card-body">
-				<form method="post" enctype="multipart/form-data">
+				<form method="post" asp-controller="Home" asp-action="AddCategoryUser" enctype="multipart/form-data">
 					<div class="row">
 						@Html.HiddenFor(a=>a.CategoryId)
 						<div class="col-lg-6 col-sm-6 col-12">

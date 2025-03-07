@@ -3,6 +3,8 @@
     ViewData["Title"] = "AddPurchage";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="/assets/js/jquery-3.6.0.min.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
 
 <div class="page-wrapper">
 	<div class="content">
@@ -48,7 +50,7 @@
 						<div class="form-group">
 							<label>Purchage Date </label>
 							<div class="input-groupicon">
-								<input type="text" placeholder="DD-MM-YYYY" class="datetimepicker form-control" id="PurchageDate">
+								<input type="text" placeholder="YYYY-MM-DD" class="datetimepicker form-control" id="PurchageDate">
 								<div class="addonset">
 									<img src="/assets/img/icons/calendars.svg" alt="img">
 								</div>
@@ -76,9 +78,9 @@
 								<tbody>
 									<tr>										
 										<td><input type="text" class="form-control"  id="itemname_0" name="itemname_0"/></td>
-										<td><input type="text" class="form-control" id="Qty_0" name="Qty_0" /></td>
-										<td><input type="text" class="form-control" id="purchaseprince_0" name="purchaseprince_0" /></td>
-										<td><input type="text" class="form-control" id="TotalCost_0" name="TotalCost_0" /></td>
+										<td><input type="text" class="form-control" id="Qty_0" name="Qty_0" onchange="CalculateAmount(0)" /></td>
+										<td><input type="text" class="form-control" id="purchaseprince_0" name="purchaseprince_0" onchange="CalculateAmount(0)" /></td>
+										<td><input type="text" class="form-control" id="TotalCost_0" name="TotalCost_0" disabled/></td>
 										<td>
 											<button id="delete_Purchage"><img src="/assets/img/icons/delete.svg" alt="svg"></button>
 											<button style="color:green;font-size:20px" onclick="AddTableRow(this)"><i class="fa fa-plus"></i></button>
@@ -92,17 +94,17 @@
 						<div class="col-lg-12 float-md-right">
 							<div class="total-order">
 								<ul>
-									<li>
-										<h4>Order Tax</h4>
-										<h5>$ 0.00 (0.00%)</h5>
+									<li class="total">
+										<h4>Total Amount</h4>
+										<h5 id="totalamount">₹ 0.00</h5>
 									</li>
 									<li>
-										<h4>Shipping</h4>
-										<h5>$ 0.00</h5>
+										<h4>Discount %</h4>
+										<h4><input type="number" id="discount" class="form-control" onchange="disAmount(this)" /></h4>
 									</li>
 									<li class="total">
 										<h4>Grand Total</h4>
-										<h5>$ 0.00</h5>
+										<h5 id="grandtotal">₹ 0.00</h5>
 									</li>
 								</ul>
 							</div>
@@ -128,6 +130,9 @@
 		mainobj.BillDetails = $("#BillDetails").val();
 		mainobj.PurchageDate = $("#PurchageDate").val();
 		mainobj.Mobile = $("#Mobile").val();
+		mainobj.Totalamount = +$("#totalamount").text().slice(2);
+		mainobj.Discount = $("#discount").val();
+		mainobj.Grandtotal =  +$("#grandtotal").text().slice(2);
 
 
 		var itemlist = new Array();
@@ -146,11 +151,9 @@
 			});			
 		});
 		mainobj.purchageitem = itemlist;
-
 		var Data = JSON.stringify(mainobj);
-
 		$.post("/Purchage/AddPurchage", { data: Data }, function (result) {
-			alert("Breaking news posted data");
+			alert(result);
 			window.location.href = window.location.href;
 		})
 
@@ -161,10 +164,10 @@
 	function AddTableRow(obj) {
 		var rowcount = $("#purachsedata tbody tr").length;
 		var newrow = "<tr>"
-		newrow += "<td><input type='text' id='itemname_" + rowcount + "' name='itemname_" + rowcount + "' class='form-control'/></td>";
-		newrow += "<td><input type='text' id='Qty_" + rowcount + "' name='Qty_" + rowcount + "' class='form-control'/></td>";
-		newrow += "<td><input type='text' id='purchaseprince_" + rowcount + "' name='purchaseprince_" + rowcount + "' class='form-control'/></td>";
-		newrow += "<td><input type='text' id='TotalCost_" + rowcount + "' name='TotalCost_" + rowcount + "' class='form-control'/></td>";
+		newrow += "<td><input type='text'  id='itemname_" + rowcount + "'onchange='CalculateAmount(" + rowcount + "); ' name='itemname_" + rowcount + "' class='form-control'/></td>";
+		newrow += "<td><input type='text' id='Qty_" + rowcount + "' name='Qty_" + rowcount + "' class='form-control' /></td>";
+		newrow += "<td><input type='text' id='purchaseprince_" + rowcount + "'onchange='CalculateAmount(" + rowcount + "); ' name='purchaseprince_" + rowcount + "' class='form-control'/></td>";
+		newrow += "<td><input type='text' id='TotalCost_" + rowcount + "' name='TotalCost_" + rowcount + "' class='form-control' disabled/></td>";
 		newrow += "<td><button id='delete_Purchage'><img src='/assets/img/icons/delete.svg' alt = 'svg' > </button>";
 		newrow += "<button style = 'color:green;font-size:20px' onclick = 'AddTableRow(this)' > <i class='fa fa-plus' > </i></button > </td>";
 		newrow += "</tr>";	
@@ -175,7 +178,7 @@
 
 
 
-	$(document).on("click", "#delete_Purchage", function () {
+	$(document).on("click","#delete_Purchage",function() {
 		var rowdelete = $(this).closest("tr");
 		rowdelete.remove();
 
@@ -188,8 +191,36 @@
 		});
 	});
 
+	function disAmount(obj) {
+		var discount=$("#discount").val();
+		var amount = +$("#totalamount").text().slice(2);
+			amount -= amount * +discount / 100;
+		$("#grandtotal").text('₹ ' + amount.toFixed(2));
+	}
+	
+	var Discount = 0;
+	var grandTotal = 0;
+	var total = 0;
+	function CalculateAmount(obj) {
+		var amount = 0;
+		var qty = 0;
+		qty = $("#Qty_"+obj).val();
+		amount = $("#purchaseprince_" + obj).val();		
+		total = qty * amount;
+		$("#TotalCost_" + obj).val(total);
+		discountAmount();
+	}
 
 
+	function discountAmount(){
+		var TotalAmount = 0;
+		$("#purachsedata tbody tr").each(function () {	
+			var rowId = $(this).find("input").attr("id").split('_')[1];
+			TotalAmount += parseFloat($("#TotalCost_" + rowId).val());
+			$("#totalamount").text('₹ ' + TotalAmount.toFixed(2));		
+			$("#grandtotal").text('₹ '+TotalAmount.toFixed(2) );
+		});
+	}
 </script>
 
 

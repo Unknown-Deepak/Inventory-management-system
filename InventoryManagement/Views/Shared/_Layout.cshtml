@@ -24,8 +24,8 @@
 
     <link href="~/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 	<!-- Main CSS -->
-    <link rel="stylesheet" href="~/assets/css/style.css">
-	<script src="~/js/site.js"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+	
 </head>
 <body>
 	<div id="global-loader">
@@ -133,10 +133,10 @@
 									<a href="activities.html">
 										<div class="media d-flex">
                                             <span class="avatar flex-shrink-0">
-                                                <img src="/assets/img/profiles/me.jpg" />
+                                                <img src="/assets/img/profiles/me2.jpg" />
 											</span>
 											<div class="media-body flex-grow-1">
-												<p class="noti-details"><span class="noti-title">Abhay Kumar</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+												<p class="noti-details"><span class="noti-title">Deepak Mishra</span> added new task <span class="noti-title">Patient appointment booking</span></p>
 												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
 											</div>
 										</div>
@@ -210,10 +210,10 @@
 					<a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
 						<span class="user-info">
 							<span class="user-letter">
-								<img src="~/assets/img/profiles/me.jpg" alt="" class="img-fluid" />
+								<img src="~/assets/img/profiles/me2.jpg" alt="" class="img-fluid" />
 							</span>
                             <span class="user-detail">
-								<span class="user-name">Abhay Kumar Bind</span>
+								<span class="user-name">Deepak Mishra</span>
 								<span class="user-role">Super Admin</span>
 							</span>
 						</span>
@@ -226,7 +226,7 @@
 									<span class="status online"></span>
 								</span>
 								<div class="profilesets">
-									<h6>Abhay Kumar Bind</h6>
+									<h6>Deepak Mishra</h6>
 									<h5>Super Admin</h5>
 								</div>
 							</div>
@@ -301,6 +301,14 @@
 							</ul>
 						</li>
 						<li class="submenu-open">
+							<h6 class="submenu-hdr">Reports</h6>
+							<ul>
+								<li><a href="@Url.Action("SalesReport", "Sales")"><i data-feather="bar-chart-2"></i><span>Sales Report</span></a></li>
+								<li><a href="#"><i data-feather="pie-chart"></i><span>Purchase report</span></a></li>
+								
+							</ul>
+						</li>
+						<li class="submenu-open">
 							<h6 class="submenu-hdr">Finance & Accounts</h6>
 							<ul>
 								<li class="submenu">
@@ -320,20 +328,6 @@
 								<li><a href="supplierlist.html"><i data-feather="users"></i><span>Suppliers</span></a></li>
 								<li><a href="userlist.html"><i data-feather="user-check"></i><span>Users</span></a></li>
 								<li><a href="storelist.html"><i data-feather="home"></i><span>Stores</span></a></li>
-							</ul>
-						</li>
-						<li class="submenu-open">
-							<h6 class="submenu-hdr">Reports</h6>
-							<ul>
-								<li><a href="@Url.Action("SalesReport", "Sales")"><i data-feather="bar-chart-2"></i><span>Sales Report</span></a></li>
-								<li><a href="#"><i data-feather="pie-chart"></i><span>Purchase report</span></a></li>
-								
-								@* 
-								<li><a href="inventoryreport.html"><i data-feather="credit-card"></i><span>Inventory Report</span></a></li>
-								<li><a href="invoicereport.html"><i data-feather="file"></i><span>Invoice Report</span></a></li>
-								<li><a href="purchasereport.html"><i data-feather="bar-chart"></i><span>Purchase Report</span></a></li>
-								<li><a href="supplierreport.html"><i data-feather="database"></i><span>Supplier Report</span></a></li>
-								<li><a href="customerreport.html"><i data-feather="pie-chart"></i><span>Customer Report</span></a></li> *@
 							</ul>
 						</li>
 						<li class="submenu-open">
@@ -503,8 +497,15 @@
 	<script src="~/assets/js/bootstrap.bundle.min.js"></script>
 
 	<!--DatePicker-->
-	<script src="~/assets/js/bootstrap-
-.min.js"></script>
+	@* <script src="~/assets/js/bootstrap.min.js"></script> *@
+	<script src="/assets/js/moment.min.js"></script>
+	<script src="/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+
+
+
+
+
 	<!-- Chart JS -->
 	<script src="~/assets/plugins/apexchart/apexcharts.min.js"></script>
 	<script src="~/assets/plugins/apexchart/chart-data.js"></script>

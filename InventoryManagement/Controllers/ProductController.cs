@@ -140,7 +140,7 @@ namespace InventoryManagement.Controllers
 				}
 				obj.ProductImg = obj.ProductImage.FileName;
 
-				if (obj.ProductId != null)
+				if (obj.ProductId != null && obj.ProductId!=0)
                 {
 					obj.CreateBy= Convert.ToInt32(HttpContext.Session.GetString("UserId"));
                     status = lyer.ProductEditPost(obj);

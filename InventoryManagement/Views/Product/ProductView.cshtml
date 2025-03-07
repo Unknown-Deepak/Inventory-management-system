@@ -135,38 +135,35 @@
 							@{
 								foreach (var dr in Model.ProductList)
 								{
-														<tr>
-															<td>
-																<label class="checkboxs">
-																	<input type="checkbox">
-																	<span class="checkmarks"></span>
-																</label>
-															</td>
-															<td>@dr.CategoryName</td>
-															<td>@dr.SubCategoryName</td>
-															<td>@dr.BrandName</td>
-															<td>@dr.ProductName</td>
-															<td>@dr.ProductPrice</td>
-															<td>@dr.Qty</td>
-															<td>@dr.TotalPrice</td>
-															<td>@dr.ProductDisc</td>
-															<td class="productimgname">
-																<a href="javascript:void(0);" class="product-img">
-																	<img src="~/uploadimg/product/@dr.ProductImg" alt="product Image">
-																</a>
-															</td>
-															<td>
-																<a class="me-3" href="#">
-																	<img src="~/assets/img/icons/eye.svg" alt="img">
-																</a>
+									<tr>
+										<td>
+											<label class="checkboxs">
+												<input type="checkbox">
+												<span class="checkmarks"></span>
+											</label>
+										</td>
+										<td>@dr.CategoryName</td>
+										<td>@dr.SubCategoryName</td>
+										<td>@dr.BrandName</td>
+										<td>@dr.ProductName</td>
+										<td>@dr.ProductPrice</td>
+										<td>@dr.Qty</td>
+										<td>@dr.TotalPrice</td>
+										<td>@dr.ProductDisc</td>
+										<td class="productimgname">
+											<a href="javascript:void(0);" class="product-img">
+												<img src="~/uploadimg/product/@dr.ProductImg" alt="product Image">
+											</a>
+										</td>
+										<td>
 											<a class="me-3" href="/Product/AddProduct/@dr.ProductId">
-																	<img src="~/assets/img/icons/edit.svg" alt="img">
-																</a>
-																<button class="me-3 confirm-text" userId="@dr.ProductId" onclick="ProductDelete(this)">
-																	<img src="~/assets/img/icons/delete.svg" alt="img">
-																</button>
-															</td>
-														</tr>
+												<img src="~/assets/img/icons/edit.svg" alt="img">
+											</a>
+											<button class="me-3 confirm-text" userId="@dr.ProductId" onclick="ProductDelete(this)">
+												<img src="~/assets/img/icons/delete.svg" alt="img">
+											</button>
+										</td>
+									</tr>
 								}
 							}													
 						</tbody>
